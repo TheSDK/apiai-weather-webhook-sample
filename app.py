@@ -32,13 +32,13 @@ def processRequest(req):
     if req.get("result").get("action") != "yahooWeatherForecast":
         print("Wrong action!")
         return {}
-    baseurl = "https://query.yahooapis.com/v1/public/yql?"
+    baseurl = "https://query.yahooapis.com/v1/public/yql?q="
     yql_query = makeYqlQuery(req)
     if yql_query is None:
         print("yql_query in none!")
         return {}
-    #yql_url = baseurl + urllib.urlencode({'q': yql_query}) + "&format=json"
-    yql_url = "https://query.yahooapis.com/v1/public/yql?q=select+%2A+from+weather.forecast+where+woeid+in+%28select+woeid+from+geo.places%281%29+where+text%3D%27Boston%27%29&format=json"
+    yql_url = baseurl + urllib.urlencode(yql_query) + "&format=json"
+    #yql_url = "https://query.yahooapis.com/v1/public/yql?q=select+%2A+from+weather.forecast+where+woeid+in+%28select+woeid+from+geo.places%281%29+where+text%3D%27Boston%27%29&format=json"
     result = urllib.urlopen(yql_url).read()
     data = json.loads(result)
     res = makeWebhookResult(data)
