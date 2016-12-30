@@ -38,8 +38,8 @@ def processRequest(req):
         print("yql_query in none!")
         return {}
     print("yql_query: " + yql_query)
-    #yql_url = baseurl + urllib.urlencode(yql_query) + "&format=json"
-    yql_url = "https://query.yahooapis.com/v1/public/yql?q=select+%2A+from+weather.forecast+where+woeid+in+%28select+woeid+from+geo.places%281%29+where+text%3D%27Boston%27%29&format=json"
+    yql_url = baseurl + urllib.urlencode(yql_query) + "&format=json"
+    #yql_url = "https://query.yahooapis.com/v1/public/yql?q=select+%2A+from+weather.forecast+where+woeid+in+%28select+woeid+from+geo.places%281%29+where+text%3D%27Boston%27%29&format=json"
     print("yql_url: " + yql_url)
     result = urllib.urlopen(yql_url).read()
     data = json.loads(result)
