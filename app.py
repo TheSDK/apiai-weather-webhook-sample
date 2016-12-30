@@ -58,6 +58,8 @@ def makeYqlQuery(req):
 
 
 def makeWebhookResult(data):
+    print("Yahoo result:")
+    print(json.dumps(data, indent=4))
     query = data.get('query')
     if query is None:
         return {}
