@@ -67,7 +67,7 @@ def makeWebhookResultOWM(data):
     if wheater is None:
         print("Invalid return: wheater")
         return {}
-    description = data.get('description')
+    description = wheater.get('description')
     if description is None:
         print("Invalid return: description")
         return {}
