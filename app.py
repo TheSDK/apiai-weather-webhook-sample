@@ -42,7 +42,7 @@ def processRequest(req):
     #yql_url = baseurl + urllib.urlencode({'q': yql_query}) + "&format=json"
     #owm_url = baseurl + urllib.urlencode({'q': owm_query})
     owm_url = "http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=" + req.get("result").get("action") + "&units=metric"
-    print("yql_url: " + yql_url)
+    print("owm_url: " + owm_url)
     result = urllib.urlopen(owm_url).read()
     data = json.loads(result)
     res = makeWebhookResultOWM(data)
