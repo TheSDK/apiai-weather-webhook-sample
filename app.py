@@ -79,7 +79,7 @@ def makeWebhookResultOWM(data):
         description = description + ", " + descr
         print("description: " + description)
         
-    description = description[:2]
+    description = description[2:]
     print("description: " + description)
         
     print("before main")
@@ -97,7 +97,7 @@ def makeWebhookResultOWM(data):
         return {}
     print("after name")
     
-    speech = "Today in " + city_name + " you find " + description + ", the current temperature is " + temperature + " degree celsius"
+    speech = "Today in " + city_name + " you find " + description + ", the current temperature is " + str(temperature) + " degree celsius"
         
     print("Response:")
     print(speech)
