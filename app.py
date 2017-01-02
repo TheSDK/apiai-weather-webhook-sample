@@ -84,7 +84,7 @@ def makeWebhookResultOWM(data):
         print("Invalid return: city_name")
         return {}
     
-    speech = "Today in " + city_name + " you find " + description + ", the current temperature is " + temperature + " celsius"
+    speech = "Today in " + city_name + " you find " + description + ", the current temperature is " + str(temperature) + " celsius"
         
     print("Response:")
     print(speech)
