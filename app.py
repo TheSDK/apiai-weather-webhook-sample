@@ -42,7 +42,7 @@ def processRequest(req):
     #yql_url = baseurl + urllib.urlencode({'q': yql_query}) + "&format=json"
     #owm_url = baseurl + urllib.urlencode({'q': owm_query})
     owm_url = "http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=" + req.get("result").get("action") + "&units=metric"
-    print("yql_url: " + owm_query)
+    print("yql_url: " + yql_url)
     result = urllib.urlopen(owm_url).read()
     data = json.loads(result)
     res = makeWebhookResultOWM(data)
@@ -63,14 +63,22 @@ def makeWebhookResultOWM(data):
     print("OWM result:")
     print(json.dumps(data, indent=4))
     
-    wheater = data.get('weather')
-    if wheater is None:
+    wheater_list = data.get('weather')
+    if wheater_list is None:
         print("Invalid return: wheater")
         return {}
-    description = wheater.get('description')
-    if description is None:
-        print("Invalid return: description")
-        return {}
+    
+    description = ""
+    for wheater in wheater_list:
+        descr = wheater.get('description')
+        if descr is None:
+            print("Invalid return: description")
+            return {}
+        
+        description = description + ", " + descr
+        
+    description = description[:2]
+    
     #main_info = data.get('main')
     #if main_info is None:
     #    print("Invalid return: main_info")
