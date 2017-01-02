@@ -71,31 +71,33 @@ def makeWebhookResultOWM(data):
     description = ""
     for wheater in wheater_list:
         descr = wheater.get('description')
+        print("wheater.get('description'): " + descr)
         if descr is None:
             print("Invalid return: description")
             return {}
         
         description = description + ", " + descr
+        print("description: " + description)
         
     description = description[:2]
-    
-    #main_info = data.get('main')
-    #if main_info is None:
-    #    print("Invalid return: main_info")
-    #    return {}
-    #temperature = main_info.get('temp')
-    #if temperature is None:
-    #    print("Invalid return: temperature")
-    #    return {}
-    print("before name")
+    print("description: " + description)
+        
+    print("before main")
+    main_info = data.get('main')
+    if main_info is None:
+        print("Invalid return: main_info")
+        return {}
+    temperature = main_info.get('temp')
+    if temperature is None:
+        print("Invalid return: temperature")
+        return {}
     city_name = data.get('name')
     if city_name is None:
         print("Invalid return: city_name")
         return {}
-    
     print("after name")
     
-    speech = "Today in " + city_name + " you find " + description + ", the current temperature is 3 degree celsius"
+    speech = "Today in " + city_name + " you find " + description + ", the current temperature is " + temperature + " degree celsius"
         
     print("Response:")
     print(speech)
