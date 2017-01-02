@@ -29,22 +29,23 @@ def webhook():
 
 
 def processRequest(req):
-    if req.get("result").get("action") != "yahooWeatherForecast":
+    if req.get("result").get("action") is None:
         print("Wrong action!")
         return {}
-    baseurl = "https://query.yahooapis.com/v1/public/yql?"
-    yql_query = makeYqlQuery(req)
-    if yql_query is None:
-        print("yql_query in none!")
+    #baseurl = "https://query.yahooapis.com/v1/public/yql?"
+    baseurl = "api.openweathermap.org/data/2.5/weather?"
+    owm_query = makeYqlQuery(req)
+    if owm_query is None:
+        print("owm_query in none!")
         return {}
-    print("yql_query: " + yql_query)
-    yql_url = baseurl + urllib.urlencode({'q': yql_query}) + "&format=json"
-    #yql_url = baseurl + urllib.urlencode(yql_query) + "&format=json"
-    #yql_url = "https://query.yahooapis.com/v1/public/yql?q=select+%2A+from+weather.forecast+where+woeid+in+%28select+woeid+from+geo.places%281%29+where+text%3D%27Boston%27%29&format=json"
-    print("yql_url: " + yql_url)
-    result = urllib.urlopen(yql_url).read()
+    print("owm_query: " + owm_query)
+    #yql_url = baseurl + urllib.urlencode({'q': yql_query}) + "&format=json"
+    #owm_url = baseurl + urllib.urlencode({'q': owm_query})
+    owm_url = "http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=" + req.get("result").get("action") + "&units=metric"
+    print("yql_url: " + owm_query)
+    result = urllib.urlopen(owm_url).read()
     data = json.loads(result)
-    res = makeWebhookResult(data)
+    res = makeWebhookResultOWM(data)
     return res
 
 
@@ -55,12 +56,52 @@ def makeYqlQuery(req):
     if city is None:
         return None
 
-    return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
+    #return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
+    return city
 
+def makeWebhookResultOWM(data):
+    print("OWM result:")
+    print(json.dumps(data, indent=4))
+    
+    wheater = data.get('weather')
+    if wheater is None:
+        print("Invalid return: wheater")
+        return {}
+    description = data.get('description')
+    if description is None:
+        print("Invalid return: description")
+        return {}
+    main = data.get('main')
+    if main is None:
+        print("Invalid return: main")
+        return {}
+    temp = main.get('temp')
+    if temp is None:
+        print("Invalid return: temp")
+        return {}
+    city = data.get('name')
+    if city is None:
+        print("Invalid return: city")
+        return {}
+    
+    speech = "Today in " + city + " you find " + description + \
+             ", the temperature is " + temp + " celsius"
+        
+    print("Response:")
+    print(speech)
+    
+    return {
+        "speech": speech,
+        "displayText": speech,
+        # "data": data,
+        # "contextOut": [],
+        "source": "apiai-weather-webhook-sample"
+    }
 
 def makeWebhookResult(data):
-    print("Yahoo result:")
+    print("OWM result:")
     print(json.dumps(data, indent=4))
+    
     query = data.get('query')
     if query is None:
         return {}
