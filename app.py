@@ -46,7 +46,7 @@ def processRequest(req):
     print("owm_url: " + owm_url)
     result = urllib.urlopen(owm_url).read()
     data = json.loads(result)
-    res = makeWebhookResultOWM(data)
+    res = makeWebhookResultOWM(data, owm_query)
     return res
 
 
@@ -60,7 +60,7 @@ def makeYqlQuery(req):
     #return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
     return city
 
-def makeWebhookResultOWM(data):
+def makeWebhookResultOWM(data, location):
     print("OWM result:")
     print(json.dumps(data, indent=4))
     
@@ -98,7 +98,7 @@ def makeWebhookResultOWM(data):
         return {}
     print("after name")
     
-    speech = "Today in " + city_name + " you find " + description + ", the current temperature is " + str(temperature) + " degree celsius"
+    speech = "Today in " + location + " you find " + description + ", the current temperature is " + str(temperature) + " degree celsius"
         
     print("Response:")
     print(speech)
