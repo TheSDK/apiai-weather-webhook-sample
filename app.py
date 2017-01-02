@@ -71,14 +71,14 @@ def makeWebhookResultOWM(data):
     if description is None:
         print("Invalid return: description")
         return {}
-    main_info = data.get('main')
-    if main_info is None:
-        print("Invalid return: main_info")
-        return {}
-    temperature = main_info.get('temp')
-    if temperature is None:
-        print("Invalid return: temperature")
-        return {}
+    #main_info = data.get('main')
+    #if main_info is None:
+    #    print("Invalid return: main_info")
+    #    return {}
+    #temperature = main_info.get('temp')
+    #if temperature is None:
+    #    print("Invalid return: temperature")
+    #    return {}
     city_name = data.get('name')
     if city_name is None:
         print("Invalid return: city_name")
