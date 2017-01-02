@@ -79,10 +79,13 @@ def makeWebhookResultOWM(data):
     #if temperature is None:
     #    print("Invalid return: temperature")
     #    return {}
+    print("before name")
     city_name = data.get('name')
     if city_name is None:
         print("Invalid return: city_name")
         return {}
+    
+    print("after name")
     
     speech = "Today in " + city_name + " you find " + description + ", the current temperature is 3 degree celsius"
         
@@ -96,6 +99,7 @@ def makeWebhookResultOWM(data):
         # "contextOut": [],
         "source": "owm"
     }
+
 
 def makeWebhookResult(data):
     print("OWM result:")
