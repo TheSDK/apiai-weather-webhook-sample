@@ -33,7 +33,7 @@ def processRequest(req):
         print("Wrong action!")
         return {}
     #baseurl = "https://query.yahooapis.com/v1/public/yql?"
-    baseurl = "https://api.openweathermap.org/data/2.5/weather?"
+    baseurl = "http://api.openweathermap.org/data/2.5/weather?"
     owm_query = makeYqlQuery(req)
     if owm_query is None:
         print("owm_query in none!")
