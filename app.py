@@ -71,21 +71,20 @@ def makeWebhookResultOWM(data):
     if description is None:
         print("Invalid return: description")
         return {}
-    main = data.get('main')
-    if main is None:
-        print("Invalid return: main")
+    main_info = data.get('main')
+    if main_info is None:
+        print("Invalid return: main_info")
         return {}
-    temp = main.get('temp')
-    if temp is None:
-        print("Invalid return: temp")
+    temperature = main_info.get('temp')
+    if temperature is None:
+        print("Invalid return: temperature")
         return {}
-    city = data.get('name')
-    if city is None:
-        print("Invalid return: city")
+    city_name = data.get('name')
+    if city_name is None:
+        print("Invalid return: city_name")
         return {}
     
-    speech = "Today in " + city + " you find " + description + \
-             ", the temperature is " + temp + " celsius"
+    speech = "Today in " + city_name + " you find " + description + ", the current temperature is " + temperature + " celsius"
         
     print("Response:")
     print(speech)
@@ -95,7 +94,7 @@ def makeWebhookResultOWM(data):
         "displayText": speech,
         # "data": data,
         # "contextOut": [],
-        "source": "apiai-weather-webhook-sample"
+        "source": "owm"
     }
 
 def makeWebhookResult(data):
